@@ -1,0 +1,45 @@
+.sidebar {
+    width: 200px;
+    /* position: sticky; Removed to allow scrolling with page */
+    height: fit-content;
+    padding-right: 20px;
+}
+
+.container {
+    padding: 1rem;
+    border-radius: 12px;
+}
+
+.nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    color: #888;
+    transition: all 0.2s;
+    font-size: 0.95rem;
+}
+
+.link:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--primary);
+}
+
+.icon {
+    font-size: 1.1rem;
+    width: 24px;
+    text-align: center;
+}
+
+@media (max-width: 1024px) {
+    .sidebar {
+        display: none;
+    }
+}

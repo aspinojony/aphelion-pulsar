@@ -1,0 +1,188 @@
+'use client';
+
+import { useActionState, useState } from 'react';
+import { login, loginWithCode, sendVerificationCode } from '@/actions/auth';
+import Link from 'next/link';
+import { useFormStatus } from 'react-dom';
+
+function SubmitButton() {
+    const { pending } = useFormStatus();
+    return (
+        <button
+            type="submit"
+            disabled={pending}
+            style={{
+                width: '100%',
+                padding: '0.75rem',
+                borderRadius: '8px',
+                border: 'none',
+                background: 'var(--primary)',
+                color: '#000',
+                fontWeight: 'bold',
+                cursor: pending ? 'not-allowed' : 'pointer',
+                opacity: pending ? 0.7 : 1
+            }}
+        >
+            {pending ? '登录中...' : '登录'}
+        </button>
+    );
+}
+
+export default function LoginPage() {
+    const [loginType, setLoginType] = useState<'password' | 'code'>('password');
+    const [state, formAction] = useActionState(loginType === 'password' ? login : loginWithCode, null);
+    const [email, setEmail] = useState('');
+    const [countdown, setCountdown] = useState(0);
+
+    const handleSendCode = async () => {
+        if (!email) {
+            alert('请先输入邮箱');
+            return;
+        }
+        const res = await sendVerificationCode(email, 'login');
+        if (res.success) {
+            alert(res.message);
+            setCountdown(60);
+            const timer = setInterval(() => {
+                setCountdown(prev => {
+                    if (prev <= 1) {
+                        clearInterval(timer);
+                        return 0;
+                    }
+                    return prev - 1;
+                });
+            }, 1000);
+        } else {
+            alert(res.message);
+        }
+    };
+
+    return (
+        <div className="container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '80vh' }}>
+            <div className="glass" style={{ width: '100%', maxWidth: '400px', padding: '2rem', borderRadius: '12px' }}>
+                <h1 style={{ fontSize: '2rem', marginBottom: '2rem', textAlign: 'center' }}>欢迎回来</h1>
+
+                <div style={{ display: 'flex', marginBottom: '2rem', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+                    <button
+                        onClick={() => setLoginType('password')}
+                        style={{
+                            flex: 1,
+                            padding: '1rem',
+                            background: 'none',
+                            border: 'none',
+                            color: loginType === 'password' ? 'var(--primary)' : '#888',
+                            borderBottom: loginType === 'password' ? '2px solid var(--primary)' : 'none',
+                            cursor: 'pointer'
+                        }}
+                    >
+                        密码登录
+                    </button>
+                    <button
+                        onClick={() => setLoginType('code')}
+                        style={{
+                            flex: 1,
+                            padding: '1rem',
+                            background: 'none',
+                            border: 'none',
+                            color: loginType === 'code' ? 'var(--primary)' : '#888',
+                            borderBottom: loginType === 'code' ? '2px solid var(--primary)' : 'none',
+                            cursor: 'pointer'
+                        }}
+                    >
+                        验证码登录
+                    </button>
+                </div>
+
+                <form action={formAction} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                    <div>
+                        <label style={{ display: 'block', marginBottom: '0.5rem', color: '#888' }}>邮箱</label>
+                        <input
+                            name="email"
+                            type="email"
+                            required
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            style={{
+                                width: '100%',
+                                padding: '0.75rem',
+                                borderRadius: '8px',
+                                border: '1px solid rgba(255,255,255,0.1)',
+                                background: 'rgba(0,0,0,0.2)',
+                                color: '#fff'
+                            }}
+                        />
+                    </div>
+
+                    {loginType === 'password' ? (
+                        <div>
+                            <label style={{ display: 'block', marginBottom: '0.5rem', color: '#888' }}>密码</label>
+                            <input
+                                name="password"
+                                type="password"
+                                required
+                                style={{
+                                    width: '100%',
+                                    padding: '0.75rem',
+                                    borderRadius: '8px',
+                                    border: '1px solid rgba(255,255,255,0.1)',
+                                    background: 'rgba(0,0,0,0.2)',
+                                    color: '#fff'
+                                }}
+                            />
+                        </div>
+                    ) : (
+                        <div>
+                            <label style={{ display: 'block', marginBottom: '0.5rem', color: '#888' }}>验证码</label>
+                            <div style={{ display: 'flex', gap: '1rem' }}>
+                                <input
+                                    name="code"
+                                    type="text"
+                                    required
+                                    style={{
+                                        flex: 1,
+                                        padding: '0.75rem',
+                                        borderRadius: '8px',
+                                        border: '1px solid rgba(255,255,255,0.1)',
+                                        background: 'rgba(0,0,0,0.2)',
+                                        color: '#fff'
+                                    }}
+                                />
+                                <button
+                                    type="button"
+                                    onClick={handleSendCode}
+                                    disabled={countdown > 0}
+                                    style={{
+                                        padding: '0 1rem',
+                                        borderRadius: '8px',
+                                        border: '1px solid var(--primary)',
+                                        background: 'none',
+                                        color: 'var(--primary)',
+                                        cursor: countdown > 0 ? 'not-allowed' : 'pointer',
+                                        opacity: countdown > 0 ? 0.5 : 1,
+                                        whiteSpace: 'nowrap'
+                                    }}
+                                >
+                                    {countdown > 0 ? `${countdown}s` : '获取验证码'}
+                                </button>
+                            </div>
+                        </div>
+                    )}
+
+                    {state?.message && (
+                        <div style={{ color: '#f87171', fontSize: '0.9rem', textAlign: 'center' }}>
+                            {state.message}
+                        </div>
+                    )}
+
+                    <SubmitButton />
+
+                    <div style={{ textAlign: 'center', marginTop: '1rem' }}>
+                        <Link href="/register" style={{ color: '#888', fontSize: '0.9rem' }}>
+                            没有账号？去注册
+                        </Link>
+                    </div>
+                </form>
+            </div>
+        </div>
+    );
+}

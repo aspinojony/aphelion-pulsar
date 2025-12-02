@@ -1,0 +1,56 @@
+.card {
+    padding: 1.5rem;
+    border-radius: 12px;
+    transition: transform 0.2s;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.5rem;
+}
+
+.title {
+    font-size: 1.3rem;
+    margin: 0;
+}
+
+.title a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.2s;
+}
+
+.title a:hover {
+    color: var(--primary);
+}
+
+.date {
+    font-size: 0.85rem;
+    color: #666;
+    white-space: nowrap;
+}
+
+.tags {
+    margin-bottom: 0.8rem;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.excerpt {
+    color: #aaa;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0;
+}
