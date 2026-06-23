@@ -58,3 +58,9 @@ logs/
 
 # PM2
 .pm2/
+
+# Local secrets/admin utilities
+.env*
+!/.env.example
+scripts/get-admin-*.js
+scripts/set-admin*.js

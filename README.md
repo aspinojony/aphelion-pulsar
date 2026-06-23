@@ -2,6 +2,16 @@
 
 一个基于 Next.js 16 构建的高性能、未来主义风格的个人博客平台。采用 SQLite 作为本地数据库，结合现代化的 Web 技术栈，提供流畅的用户体验和丰富的功能。
 
+> 面向求职展示：这是一个 Next.js 全栈练习项目，重点展示 **App Router、Server Actions、SQLite 本地数据存储、用户系统、社交互动、Markdown 内容渲染、响应式 UI** 等现代 Web 开发能力。
+
+## 项目亮点
+
+- **全栈博客系统**：支持文章、Markdown 渲染、代码高亮、标签分类和内容管理。
+- **用户与社交模块**：包含注册登录、个人主页、等级展示、评论、关注/粉丝、用户动态等功能。
+- **现代 Next.js 架构**：使用 App Router、React Server Components、Server Actions 与 Zod 表单验证。
+- **轻量数据存储**：使用 SQLite / better-sqlite3 实现本地数据持久化，适合个人部署和演示。
+- **视觉与体验设计**：深空背景、霓虹视觉、Glassmorphism、响应式布局和骨架屏加载。
+
 ## ✨ 核心特性
 
 -   **未来主义设计**：深空背景、霓虹点缀（青色/紫色）以及精致的毛玻璃特效 (Glassmorphism)。
