@@ -6,6 +6,18 @@
 
 > 面向求职展示：这是一个 Next.js 全栈练习项目，重点展示 **App Router、Server Actions、SQLite 本地数据存储、用户系统、社交互动、Markdown 内容渲染、响应式 UI** 等现代 Web 开发能力。
 
+## 运行截图
+
+> 本地执行 `npm run dev -- --port 18081` 并初始化演示数据后截取，截图来自真实 Next.js 页面渲染。
+
+<p align="center">
+  <img src="docs/images/home.png" alt="博客首页" width="100%" />
+</p>
+<p align="center">
+  <img src="docs/images/login.png" alt="登录页" width="48%" />
+  <img src="docs/images/register.png" alt="注册页" width="48%" />
+</p>
+
 ## 项目亮点
 
 - **全栈博客系统**：支持文章、Markdown 渲染、代码高亮、标签分类和内容管理。
