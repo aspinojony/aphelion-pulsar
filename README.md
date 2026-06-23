@@ -1,8 +1,5 @@
 # Aphelion Pulsar - 未来主义个人博客
 
-<p align="center">
-  <img src="assets/showcase/overview.svg" alt="Project Overview" width="100%" />
-</p>
 
 
 一个基于 Next.js 16 构建的高性能、未来主义风格的个人博客平台。采用 SQLite 作为本地数据库，结合现代化的 Web 技术栈，提供流畅的用户体验和丰富的功能。
